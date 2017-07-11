@@ -11,6 +11,6 @@ b = Video()
 # data = get3d_data('database/happy_1_77.csv')
 data1 = read_openface('database/happy_1_77.csv')
 data2 = read_openface('database/happy_1_96.csv')
-
 b.play_frames(data1).play_frames(data2)
 b.run()
+b.terminate()

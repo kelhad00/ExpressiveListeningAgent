@@ -2,7 +2,7 @@
 # Require packages:
 # * pyaudio
 # * numpy
-# * panda
+# * pandas
 # ===========================================================================
 from __future__ import print_function, division, absolute_import
 
@@ -12,8 +12,6 @@ if "Darwin" in platform.platform():
     import matplotlib
     matplotlib.use("TkAgg")
 
-from six import string_types
-
 import numpy as np
 # for audio
 import wave
@@ -22,13 +20,6 @@ import pyaudio
 from matplotlib import animation
 from matplotlib import pyplot as plt
 import mpl_toolkits.mplot3d.axes3d as p3
-
-
-# ===========================================================================
-# For callback events
-# ===========================================================================
-EVENT_START_DATA = '__event_start_data__'
-EVENT_END_DATA = '__event_end_data__'
 
 
 # ===========================================================================
@@ -184,6 +175,9 @@ NB_POINTS_PER_FRAMES = 68
 
 
 def read_openface(f):
+    """Return a numpy array with shape:
+    # nb_frames x nb_points_per_frames(68) x 3(x,y,z)
+    """
     import pandas as pd
     raw_data = pd.read_csv(f)
     #find the location of 3d landmarks
@@ -277,8 +271,13 @@ class Video(object):
             for line, point in zip(lines, self._frames.pop()):
                 line.set_data(point[:2])
                 line.set_3d_properties(point[-1:])
+            # play audio every 20 frames
             if len(self._frames) % 20 == 0:
                 self.play_audio('data/n9.wav')
         else:
             self._callback_frames()
         return lines
+
+    def terminate(self):
+        # stop stream (4)
+        self._audio_player.terminate()
