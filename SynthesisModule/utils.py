@@ -11,6 +11,9 @@ import platform
 if "Darwin" in platform.platform():
     import matplotlib
     matplotlib.use("TkAgg")
+import os
+import sys
+from six import string_types
 
 import numpy as np
 # for audio
@@ -115,7 +118,7 @@ class Audio(object):
         if self._is_terminated:
             raise RuntimeError("The player is terminated.")
         # ====== stream the audio ====== #
-        a = AudioData(path)
+        a = path if isinstance(path, AudioData) else AudioData(path)
         if self.sample_width is None:
             self.sample_width = a.sample_width
             self.sr = a.sr
@@ -160,9 +163,10 @@ class Audio(object):
         return (data, pyaudio.paContinue)
 
     def terminate(self):
-        # stop stream (4)
-        self._stream.stop_stream()
-        self._stream.close()
+        if self._stream is not None:
+            # stop stream (4)
+            self._stream.stop_stream()
+            self._stream.close()
         # close PyAudio (5)
         self.pya.terminate()
         self._is_terminated = True
@@ -273,7 +277,8 @@ class Video(object):
                 line.set_3d_properties(point[-1:])
             # play audio every 20 frames
             if len(self._frames) % 20 == 0:
-                self.play_audio('data/n9.wav')
+                self.play_audio(
+                    os.path.join(os.path.dirname(sys.argv[0]), "data", "n9.wav"))
         else:
             self._callback_frames()
         return lines
