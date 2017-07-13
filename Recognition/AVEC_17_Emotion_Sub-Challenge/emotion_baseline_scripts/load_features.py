@@ -15,7 +15,7 @@ def load_features( filenames, path, num_lines ):
                 pos = line.find(';', line.find(';') + 1)  # find second ; in order to remove instance name and time stamp
                 features[c,:] = np.fromstring(line[pos+1:], dtype=float, sep=';')
                 c += 1
-    
+    print("total feature shape: ", features.shape)
     return features
 
 

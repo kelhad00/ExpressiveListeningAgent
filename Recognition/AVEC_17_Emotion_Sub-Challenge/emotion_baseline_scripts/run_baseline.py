@@ -15,7 +15,8 @@
 import os
 import fnmatch
 import numpy as np
-
+import argparse
+import sys
 from sys     import argv
 from sklearn import svm
 
@@ -23,29 +24,57 @@ from load_features     import load_all
 from calc_scores       import calc_scores
 from write_predictions import write_predictions
 
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-path_test", "--path_test_predictions", dest= 'path_test_predictions', type=str, help="prediction folder", default = "test_predictions/")
+parser.add_argument("-path_audio", "--path_audio_features", dest= 'path_audio_features', type=str, help="path_audio_features", default = "audio_features_xbow_6s/")
+parser.add_argument("-path_video", "--path_video_features", dest= 'path_video_features', type=str, help="path_video_features", default = "video_features_xbow_6s/")
+parser.add_argument("-path_text", "--path_text_features", dest= 'path_text_features', type=str, help="path_text_features", default = "text_features_xbow_6s/")
+parser.add_argument("-path_labels", "--path_labels", dest= 'path_labels', type=str, help="path_labels", default = "labels/")
+
+
+parser.add_argument("-delay", "--delay", dest= 'delay', type=int, help="delay(Sec)", default = 0)
+parser.add_argument("--audio", help="audio", action="store_true")
+parser.add_argument("--video", help="video", action="store_true")
+parser.add_argument("--text", help="text", action="store_true")
+parser.add_argument("--test_label",help="test labels are available", action="store_true")
+
+args = parser.parse_args()
+
+if len(sys.argv) == 1:
+    parser.print_help()
+    sys.exit(1)
+
 # Set folders here
-path_test_predictions = "test_predictions/"
-b_test_available      = False  # If the test labels are not available, the predictions on test are written into the folder 'path_test_predictions'
+path_test_predictions = args.path_test_predictions
+
+if args.test_label:
+    b_test_available = True
+else:
+    b_test_available      = False  # If the test labels are not available, the predictions on test are written into the folder 'path_test_predictions'
 
 # Folders with provided features and labels
-path_audio_features = "audio_features_xbow_6s/"
-path_video_features = "video_features_xbow_6s/"
-path_text_features  = "text_features_xbow_6s/"
-path_labels         = "labels/"
+path_audio_features = args.path_audio_features
+path_video_features = args.path_video_features
+path_text_features  = args.path_text_features
+path_labels         = args.path_labels
 
 sr_labels = 0.1
 
-delay = 0.0
-b_audio = True
-b_video = True
-b_text  = True
-
-if len(argv)>1:
-    delay = float(argv[1])
-if len(argv)>2:    
-    b_audio = bool(int(argv[2]))
-    b_video = bool(int(argv[3]))
-    b_text  = bool(int(argv[4]))
+delay = args.delay
+if args.audio:
+    b_audio = True
+else:
+    b_audio = False
+if args.video:
+    b_video = True
+else:
+    b_video = False
+if args.text:
+    b_text = True
+else:
+    b_text = False
 
 path_features = []
 if b_audio:
@@ -78,6 +107,15 @@ if b_test_available:
 else:
     Test   = load_all( files_test, path_features, shift, separate=True )  # Load test features separately to store the predictions in separate files
 
+print("Train feature shape: ", Train.shape)
+print("Train_L feature shape: ", Train_L.shape)
+
+print("Devel feature shape: ", Devel.shape)
+print("Devel_L feature shape: ", Devel_L.shape)
+
+print("Test feature shape: ", Test.shape)
+if b_test_available:
+    print("Test_L feature shape: ", Test_L.shape)
 
 # Run liblinear (scikit-learn)
 # Optimize complexity
@@ -90,7 +128,10 @@ scores_devel_L = np.empty((num_steps,3))
 
 seed = 0
 
+print("Finding optimal params")
 for comp in range(0,num_steps):
+    print("Finding optimal param: ", complexities[comp])
+
     regA = svm.LinearSVR(C=complexities[comp],random_state=seed)
     regA.fit(Train,Train_L[:,0])
     predA = regA.predict(Devel)
@@ -116,6 +157,8 @@ comp_opt_L = complexities[ind_opt_L]
 # Run on train+devel with optimum complexity and predict on the test set
 TrainDevel   = np.concatenate((Train, Devel), axis=0)
 TrainDevel_L = np.concatenate((Train_L, Devel_L), axis=0)
+
+print("Finding optimal param: ", comp_opt_A, ", ", comp_opt_V, ", ", comp_opt_L)
 
 regA = svm.LinearSVR(C=comp_opt_A,random_state=seed)
 regA.fit(TrainDevel,TrainDevel_L[:,0])

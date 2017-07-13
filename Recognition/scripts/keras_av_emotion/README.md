@@ -1,123 +1,41 @@
-# Real-Time-Facial-Expression-Recognition-with-DeepLearning
-A real-time facial expression recognition system through webcam streaming and CNN.
+<a id="top"/> 
+# squirrel_ser
+This folder has source codes for an audio/visual emotion recognition system. Please find a training script in a folder: "./scripts/".
+Run the script in ./keras_av_emotion/
 
-## Abstraction
-This project aims to recognize facial expression with CNN implemented by Keras. I also implement a real-time module which can real-time capture user's face through webcam steaming called by opencv. OpenCV cropped the face it detects from the original frames and resize the cropped images to 48x48 grayscale image, then take them as inputs of deep leanring model. Moreover, this project also provides a function to combine users' spoken content and  facial expression detected by our system to generate corresponding sentences with appropriate emoticons.
 
-## Dataset
-[fer2013](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) is the dataset I chose, which is anounced in Kaggle competition in 2013.
+More details will be updated soon.
 
-## Environment
-I provide my work environment for references.
+Maintainer: [**batikim09**](https://github.com/**github-user**/) (**batikim09**) - **j.kim@utwente.nl**
 
-### Hadware
-CPU : i5-6500  
-GPU : nvidia GTX 960 2G  
-RAM : 8G  
+##Contents
+1. <a href="#1--installation-requirements">Installation Requirements</a>
 
-### Software
-OS  : Ubuntu 16.04  
-Keras 1.2.0  
-scikit-learn 0.18.1  
-opencv 3.1.0  
+2. <a href="#2--build">Build</a>
 
-## Installation
-I strongly recommend you to use [`Anaconda`](https://www.continuum.io/downloads), which is a package manager and provides python virtual environment.  
-After you install Anaconda, you can create a virtual environment with python 3.4.
-```
-conda create -n env-name python=3.4
-```
-you can also check if your env. has been created by,
-```
-conda info --envs
-```
-You should activate your virtual environment in different way corresponding to your operating system.
-For example, In Ubuntu, you can activate your virtual environment by,
-```
-source activate env-name
-```
-And,
-```
-source deactivate 
-```
-to exit the virtual environment.
+3. <a href="#3--usage">Usage</a>
 
-The following instructions will lead you to install dependencies, and I suggest you to fllow the order.
-#### Install scikit-learn
-```
-conda install scikit-learn
-```
-#### Install OpenCV
-Note that the version `Anaconda` provided may not be the latest one.
-```
-conda install opencv
-```
-If you fail to install opencv due to python version conflicts, try this command instead,
-```
-conda install -c menpo opencv3=3.1.0
-```
-the version 3.1.0 can be replaced with the lateset one, but in this project, I use `opencv 3.1.0`.
-#### Install Keras
-Keras is a high-level wrapper of Theano and Tensorflow, it provides friendly APIs to manipulate several kinds of deep learning models.
-```
-pip install --upgrade keras
-```
-#### Install pandas and h5py
-`pandas` can help you to preprocess data if you want train your own deep learning model.
-```
-conda install pandas
-```
-`h5py` is used to save weights of pre-trained models.
-```
-conda install h5py
-```
-#### Configuration
-Before executing this project, you should make `Keras` use `Theano` backend by modifying configuration file in
-```
-~/.keras/keras.json
-```
-If it doesn't exist, you can create a new one, and then change the content to 
+4. <a href="#4--references">References</a>
 
-if you use kears 1 :
+## 1. Installation Requirements <a id="1--installation-requirements"/>
+####Debian packages
 
-```
-{
-    "image_dim_ordering": "th",
-    "epsilon": 1e-07,
-    "floatx": "float32",
-    "backend": "theano"
-}
-```
-if you use kears 2 :
+Please run the following steps BEFORE you run catkin_make.
 
-```
-{
-    "image_data_format": "th",
-    "epsilon": 1e-07,
-    "floatx": "float32",
-    "backend": "theano"
-}
-```
+`sudo apt-get install python-pip python-dev libhdf5-dev portaudio19-dev'
 
-## Usage
-### Simple facial expression detection
-After installing dependencies, you can move to `webcam` directory and simply type this command,
-```
-python webcam_detection.py
-```
-and the system will start detecting user's emotions and print results to the console.  
-### Affecting computing system
-If you want to combine facail expression detection and speech recognition to generate a completed sentence with appropriate emoticons,
-you should install an additional dependency.
-```
-pip install SpeechRecognition
-```
-After installing the above library, you can type this to lauch the detector.
-```
-python gen_sentence_with_emoticons.py
-```
-Launch the system and input "y" to start the detection, then you can speek something with facial expression to try to acquire a sentence with emoticons.
+Next, using pip, install all pre-required modules.
+(pip version 8.1 is required.)
 
-## Contact
-Please give me a star if you like my project.
-If you have any problem about this project, you can send an e-mail to me.
+http://askubuntu.com/questions/712339/how-to-upgrade-pip-to-latest
+
+If you have old numpy (<1.12) please remove it.
+https://github.com/tensorflow/tensorflow/issues/559
+
+Then,
+sudo pip install -r requirements.txt
+
+If you have numpy already, it must be higher than 1.12.0
+try to install tensorflow using pip, then it will install the proper version of numpy.
+
+## 4. References <a id="4--references"/>

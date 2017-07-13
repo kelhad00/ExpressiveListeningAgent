@@ -713,3 +713,4 @@ av_valence
 [[ 0.77682403  0.22317597]
  [ 0.74157303  0.25842697]]
 unweighted acc:	0.517625500313
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 15 -p 5 -l2 0.0001
