@@ -1,6 +1,9 @@
 <a id="top"/> 
 # squirrel_ser
-This folder has source codes for an audio/visual emotion recognition system. Please fine a training script in a folder: "./scripts/".
+This folder has source codes for an audio/visual emotion recognition system. Please find a training script in a folder: "./scripts/".
+Run the script in ./keras_av_emotion/
+
+
 More details will be updated soon.
 
 Maintainer: [**batikim09**](https://github.com/**github-user**/) (**batikim09**) - **j.kim@utwente.nl**
