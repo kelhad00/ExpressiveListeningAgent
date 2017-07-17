@@ -1,0 +1,716 @@
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 4 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 5 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 1 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 2 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 3 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 4 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 5 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.7230787313128092	0.56626506095909213
+collected confusion matrix
+[array([[ 0.71717172,  0.28282828],
+       [ 0.65671642,  0.34328358]])]
+average confusion matrix
+av_valence
+[[71 28]
+ [44 23]]
+[[ 0.71717172  0.28282828]
+ [ 0.65671642  0.34328358]]
+unweighted acc:	0.530227649631
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.70684691603312233	0.50898203735579983
+collected confusion matrix
+[array([[ 0.49612403,  0.50387597],
+       [ 0.44736842,  0.55263158]])]
+average confusion matrix
+av_valence
+[[64 65]
+ [17 21]]
+[[ 0.49612403  0.50387597]
+ [ 0.44736842  0.55263158]]
+unweighted acc:	0.524377804978
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.88310810712378796	0.44094487813514049
+collected confusion matrix
+[array([[ 0.46153846,  0.53846154],
+       [ 0.61111111,  0.38888889]])]
+average confusion matrix
+av_valence
+[[42 49]
+ [22 14]]
+[[ 0.46153846  0.53846154]
+ [ 0.61111111  0.38888889]]
+unweighted acc:	0.425213675214
+REC test!=valid 4 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.66037165576761414	0.65584415971458732
+collected confusion matrix
+[array([[ 0.80733945,  0.19266055],
+       [ 0.71111111,  0.28888889]])]
+average confusion matrix
+av_valence
+[[88 21]
+ [32 13]]
+[[ 0.80733945  0.19266055]
+ [ 0.71111111  0.28888889]]
+unweighted acc:	0.548114169215
+REC test!=valid 5 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.79716503090328639	0.55555555621782937
+collected confusion matrix
+[array([[ 0.65185185,  0.34814815],
+       [ 0.73333333,  0.26666667]])]
+average confusion matrix
+av_valence
+[[88 47]
+ [33 12]]
+[[ 0.65185185  0.34814815]
+ [ 0.73333333  0.26666667]]
+unweighted acc:	0.459259259259
+REC test=valid 1 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.73059015748012501	0.52409638590123275
+collected confusion matrix
+[array([[ 0.60606061,  0.39393939],
+       [ 0.59701493,  0.40298507]])]
+average confusion matrix
+av_valence
+[[60 39]
+ [40 27]]
+[[ 0.60606061  0.39393939]
+ [ 0.59701493  0.40298507]]
+unweighted acc:	0.504522840344
+REC test=valid 2 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.79406222861684006	0.61676646849352446
+collected confusion matrix
+[array([[ 0.6744186 ,  0.3255814 ],
+       [ 0.57894737,  0.42105263]])]
+average confusion matrix
+av_valence
+[[87 42]
+ [22 16]]
+[[ 0.6744186   0.3255814 ]
+ [ 0.57894737  0.42105263]]
+unweighted acc:	0.547735618115
+REC test=valid 3 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 4 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 5 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test=valid 3 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.86953363080663004	0.46456692608322686
+collected confusion matrix
+[array([[ 0.46153846,  0.53846154],
+       [ 0.52777778,  0.47222222]])]
+average confusion matrix
+av_valence
+[[42 49]
+ [19 17]]
+[[ 0.46153846  0.53846154]
+ [ 0.52777778  0.47222222]]
+unweighted acc:	0.46688034188
+REC test=valid 4 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.78967851090740848	0.5584415642472057
+collected confusion matrix
+[array([[ 0.64220183,  0.35779817],
+       [ 0.64444444,  0.35555556]])]
+average confusion matrix
+av_valence
+[[70 39]
+ [29 16]]
+[[ 0.64220183  0.35779817]
+ [ 0.64444444  0.35555556]]
+unweighted acc:	0.498878695209
+REC test=valid 5 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.68208773930867517	0.59444444576899214
+collected confusion matrix
+[array([[ 0.74814815,  0.25185185],
+       [ 0.86666667,  0.13333333]])]
+average confusion matrix
+av_valence
+[[101  34]
+ [ 39   6]]
+[[ 0.74814815  0.25185185]
+ [ 0.86666667  0.13333333]]
+unweighted acc:	0.440740740741
+0.74791958245886381	0.46385542168674698
+collected confusion matrix
+[array([[ 0.4040404 ,  0.5959596 ],
+       [ 0.44776119,  0.55223881]])]
+average confusion matrix
+av_valence
+[[40 59]
+ [30 37]]
+[[ 0.4040404   0.5959596 ]
+ [ 0.44776119  0.55223881]]
+unweighted acc:	0.478139605005
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.93768541640545944	0.46385542204581109
+collected confusion matrix
+[array([[ 0.63636364,  0.36363636],
+       [ 0.79104478,  0.20895522]])]
+average confusion matrix
+av_valence
+[[63 36]
+ [53 14]]
+[[ 0.63636364  0.36363636]
+ [ 0.79104478  0.20895522]]
+unweighted acc:	0.422659430122
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.67916554462410017	0.58083832406712155
+collected confusion matrix
+[array([[ 0.60465116,  0.39534884],
+       [ 0.5       ,  0.5       ]])]
+average confusion matrix
+av_valence
+[[78 51]
+ [19 19]]
+[[ 0.60465116  0.39534884]
+ [ 0.5         0.5       ]]
+unweighted acc:	0.552325581395
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.78657868903452954	0.60629920837447404
+collected confusion matrix
+[array([[ 0.72527473,  0.27472527],
+       [ 0.69444444,  0.30555556]])]
+average confusion matrix
+av_valence
+[[66 25]
+ [25 11]]
+[[ 0.72527473  0.27472527]
+ [ 0.69444444  0.30555556]]
+unweighted acc:	0.515415140415
+REC test!=valid 4 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.65457834980704566	0.63636364023406788
+collected confusion matrix
+[array([[ 0.77981651,  0.22018349],
+       [ 0.71111111,  0.28888889]])]
+average confusion matrix
+av_valence
+[[85 24]
+ [32 13]]
+[[ 0.77981651  0.22018349]
+ [ 0.71111111  0.28888889]]
+unweighted acc:	0.534352701325
+REC test!=valid 5 LSPEC IMG -dnn_depth 2 -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.71248599158393011	0.55555555621782937
+collected confusion matrix
+[array([[ 0.62222222,  0.37777778],
+       [ 0.64444444,  0.35555556]])]
+average confusion matrix
+av_valence
+[[84 51]
+ [29 16]]
+[[ 0.62222222  0.37777778]
+ [ 0.64444444  0.35555556]]
+unweighted acc:	0.488888888889
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.8813477740230331	0.51807228915662651
+collected confusion matrix
+[array([[ 0.64646465,  0.35353535],
+       [ 0.67164179,  0.32835821]])]
+average confusion matrix
+av_valence
+[[64 35]
+ [45 22]]
+[[ 0.64646465  0.35353535]
+ [ 0.67164179  0.32835821]]
+unweighted acc:	0.48741142771
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.88126449125358852	0.52409638554216864
+collected confusion matrix
+[array([[ 0.65656566,  0.34343434],
+       [ 0.67164179,  0.32835821]])]
+average confusion matrix
+av_valence
+[[65 34]
+ [45 22]]
+[[ 0.65656566  0.34343434]
+ [ 0.67164179  0.32835821]]
+unweighted acc:	0.49246193276
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.65872433513938311	0.61676646849352446
+collected confusion matrix
+[array([[ 0.68992248,  0.31007752],
+       [ 0.63157895,  0.36842105]])]
+average confusion matrix
+av_valence
+[[89 40]
+ [24 14]]
+[[ 0.68992248  0.31007752]
+ [ 0.63157895  0.36842105]]
+unweighted acc:	0.529171766626
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.90136602262812338	0.53543307368210924
+collected confusion matrix
+[array([[ 0.62637363,  0.37362637],
+       [ 0.69444444,  0.30555556]])]
+average confusion matrix
+av_valence
+[[57 34]
+ [25 11]]
+[[ 0.62637363  0.37362637]
+ [ 0.69444444  0.30555556]]
+unweighted acc:	0.465964590965
+REC test!=valid 4 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.68378611121858868	0.58441559370461993
+collected confusion matrix
+[array([[ 0.62385321,  0.37614679],
+       [ 0.51111111,  0.48888889]])]
+average confusion matrix
+av_valence
+[[68 41]
+ [23 22]]
+[[ 0.62385321  0.37614679]
+ [ 0.51111111  0.48888889]]
+unweighted acc:	0.556371049949
+REC test!=valid 5 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.75782443284988399	0.57777777844005163
+collected confusion matrix
+[array([[ 0.66666667,  0.33333333],
+       [ 0.68888889,  0.31111111]])]
+average confusion matrix
+av_valence
+[[90 45]
+ [31 14]]
+[[ 0.66666667  0.33333333]
+ [ 0.68888889  0.31111111]]
+unweighted acc:	0.488888888889
+0.99020330589937877	0.530120482286775
+collected confusion matrix
+[array([[ 0.74747475,  0.25252525],
+       [ 0.79104478,  0.20895522]])]
+average confusion matrix
+av_valence
+[[74 25]
+ [53 14]]
+[[ 0.74747475  0.25252525]
+ [ 0.79104478  0.20895522]]
+unweighted acc:	0.478214985678
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm --g_pool_rnn -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.99020332457071325	0.530120482286775
+collected confusion matrix
+[array([[ 0.74747475,  0.25252525],
+       [ 0.79104478,  0.20895522]])]
+average confusion matrix
+av_valence
+[[74 25]
+ [53 14]]
+[[ 0.74747475  0.25252525]
+ [ 0.79104478  0.20895522]]
+unweighted acc:	0.478214985678
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm --g_pool_rnn -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.72145413031835037	0.52694610831980215
+collected confusion matrix
+[array([[ 0.56589147,  0.43410853],
+       [ 0.60526316,  0.39473684]])]
+average confusion matrix
+av_valence
+[[73 56]
+ [23 15]]
+[[ 0.56589147  0.43410853]
+ [ 0.60526316  0.39473684]]
+unweighted acc:	0.480314157487
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm --g_pool_rnn -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.77835864016390222	0.61417321614393094
+collected confusion matrix
+[array([[ 0.73626374,  0.26373626],
+       [ 0.69444444,  0.30555556]])]
+average confusion matrix
+av_valence
+[[67 24]
+ [25 11]]
+[[ 0.73626374  0.26373626]
+ [ 0.69444444  0.30555556]]
+unweighted acc:	0.52090964591
+REC test!=valid 4 LSPEC IMG -dnn_depth 2 --v_u_lstm --g_pool_rnn -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.66238859953818385	0.61688312075354834
+collected confusion matrix
+[array([[ 0.7706422 ,  0.2293578 ],
+       [ 0.75555556,  0.24444444]])]
+average confusion matrix
+av_valence
+[[84 25]
+ [34 11]]
+[[ 0.7706422   0.2293578 ]
+ [ 0.75555556  0.24444444]]
+unweighted acc:	0.50754332314
+REC test!=valid 5 LSPEC IMG -dnn_depth 2 --v_u_lstm --g_pool_rnn -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.72049163977305097	0.61666666865348818
+collected confusion matrix
+[array([[ 0.73333333,  0.26666667],
+       [ 0.73333333,  0.26666667]])]
+average confusion matrix
+av_valence
+[[99 36]
+ [33 12]]
+[[ 0.73333333  0.26666667]
+ [ 0.73333333  0.26666667]]
+unweighted acc:	0.5
+REC test!=valid 1 RAW IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 2 RAW IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 3 RAW IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 4 RAW IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.69963420658226472	0.39759036144578314
+collected confusion matrix
+[array([[ 0.21212121,  0.78787879],
+       [ 0.32835821,  0.67164179]])]
+average confusion matrix
+av_valence
+[[21 78]
+ [22 45]]
+[[ 0.21212121  0.78787879]
+ [ 0.32835821  0.67164179]]
+unweighted acc:	0.441881501583
+0.70508651273796352	0.37951807228915663
+collected confusion matrix
+[array([[ 0.19191919,  0.80808081],
+       [ 0.34328358,  0.65671642]])]
+average confusion matrix
+av_valence
+[[19 80]
+ [23 44]]
+[[ 0.19191919  0.80808081]
+ [ 0.34328358  0.65671642]]
+unweighted acc:	0.424317804915
+0.70555220526385021	0.41566265132053787
+collected confusion matrix
+[array([[ 0.21212121,  0.78787879],
+       [ 0.28358209,  0.71641791]])]
+average confusion matrix
+av_valence
+[[21 78]
+ [19 48]]
+[[ 0.21212121  0.78787879]
+ [ 0.28358209  0.71641791]]
+unweighted acc:	0.464269561284
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.70220400621225165	0.61261261350757723
+collected confusion matrix
+[array([[ 0.80701754,  0.19298246],
+       [ 0.80952381,  0.19047619]])]
+average confusion matrix
+av_valence
+[[184  44]
+ [ 85  20]]
+[[ 0.80701754  0.19298246]
+ [ 0.80952381  0.19047619]]
+unweighted acc:	0.498746867168
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.76773088353953944	0.59931506849315064
+collected confusion matrix
+[array([[ 0.73429952,  0.26570048],
+       [ 0.72941176,  0.27058824]])]
+average confusion matrix
+av_valence
+[[152  55]
+ [ 62  23]]
+[[ 0.73429952  0.26570048]
+ [ 0.72941176  0.27058824]]
+unweighted acc:	0.502443876101
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.68725769082951993	0.58074534161490687
+collected confusion matrix
+[array([[ 0.64377682,  0.35622318],
+       [ 0.58426966,  0.41573034]])]
+average confusion matrix
+av_valence
+[[150  83]
+ [ 52  37]]
+[[ 0.64377682  0.35622318]
+ [ 0.58426966  0.41573034]]
+unweighted acc:	0.529753580556
+0.68725767305919105	0.58074534161490687
+collected confusion matrix
+[array([[ 0.64377682,  0.35622318],
+       [ 0.58426966,  0.41573034]])]
+average confusion matrix
+av_valence
+[[150  83]
+ [ 52  37]]
+[[ 0.64377682  0.35622318]
+ [ 0.58426966  0.41573034]]
+unweighted acc:	0.529753580556
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.71005522023450152	0.60960961068356723
+collected confusion matrix
+[array([[ 0.76315789,  0.23684211],
+       [ 0.72380952,  0.27619048]])]
+average confusion matrix
+av_valence
+[[174  54]
+ [ 76  29]]
+[[ 0.76315789  0.23684211]
+ [ 0.72380952  0.27619048]]
+unweighted acc:	0.519674185464
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.83560681016477822	0.55136986301369861
+collected confusion matrix
+[array([[ 0.58937198,  0.41062802],
+       [ 0.54117647,  0.45882353]])]
+average confusion matrix
+av_valence
+[[122  85]
+ [ 46  39]]
+[[ 0.58937198  0.41062802]
+ [ 0.54117647  0.45882353]]
+unweighted acc:	0.524097755044
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.72069658699983397	0.46273291925465837
+collected confusion matrix
+[array([[ 0.43776824,  0.56223176],
+       [ 0.47191011,  0.52808989]])]
+average confusion matrix
+av_valence
+[[102 131]
+ [ 42  47]]
+[[ 0.43776824  0.56223176]
+ [ 0.47191011  0.52808989]]
+unweighted acc:	0.482929063992
+0.73587595305827835	0.54658385093167705
+collected confusion matrix
+[array([[ 0.61373391,  0.38626609],
+       [ 0.62921348,  0.37078652]])]
+average confusion matrix
+av_valence
+[[143  90]
+ [ 56  33]]
+[[ 0.61373391  0.38626609]
+ [ 0.62921348  0.37078652]]
+unweighted acc:	0.492260211217
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.71004880620194633	0.60960961068356723
+collected confusion matrix
+[array([[ 0.76315789,  0.23684211],
+       [ 0.72380952,  0.27619048]])]
+average confusion matrix
+av_valence
+[[174  54]
+ [ 76  29]]
+[[ 0.76315789  0.23684211]
+ [ 0.72380952  0.27619048]]
+unweighted acc:	0.519674185464
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.83896224874339687	0.54109589041095896
+collected confusion matrix
+[array([[ 0.57487923,  0.42512077],
+       [ 0.54117647,  0.45882353]])]
+average confusion matrix
+av_valence
+[[119  88]
+ [ 46  39]]
+[[ 0.57487923  0.42512077]
+ [ 0.54117647  0.45882353]]
+unweighted acc:	0.516851378232
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.72069658662961877	0.46273291925465837
+collected confusion matrix
+[array([[ 0.43776824,  0.56223176],
+       [ 0.47191011,  0.52808989]])]
+average confusion matrix
+av_valence
+[[102 131]
+ [ 42  47]]
+[[ 0.43776824  0.56223176]
+ [ 0.47191011  0.52808989]]
+unweighted acc:	0.482929063992
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+1.6689886756845422	0.66366366455862835
+collected confusion matrix
+[array([[ 0.9254386,  0.0745614],
+       [ 0.9047619,  0.0952381]])]
+average confusion matrix
+av_valence
+[[211  17]
+ [ 95  10]]
+[[ 0.9254386  0.0745614]
+ [ 0.9047619  0.0952381]]
+unweighted acc:	0.510338345865
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+1.970002345026356	0.65068493150684936
+collected confusion matrix
+[array([[ 0.89371981,  0.10628019],
+       [ 0.94117647,  0.05882353]])]
+average confusion matrix
+av_valence
+[[185  22]
+ [ 80   5]]
+[[ 0.89371981  0.10628019]
+ [ 0.94117647  0.05882353]]
+unweighted acc:	0.476271668088
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.73414391982629434	0.58074534161490687
+collected confusion matrix
+[array([[ 0.70815451,  0.29184549],
+       [ 0.75280899,  0.24719101]])]
+average confusion matrix
+av_valence
+[[165  68]
+ [ 67  22]]
+[[ 0.70815451  0.29184549]
+ [ 0.75280899  0.24719101]]
+unweighted acc:	0.477672758837
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+1.4539532233644892	0.66366366437963542
+collected confusion matrix
+[array([[ 0.90789474,  0.09210526],
+       [ 0.86666667,  0.13333333]])]
+average confusion matrix
+av_valence
+[[207  21]
+ [ 91  14]]
+[[ 0.90789474  0.09210526]
+ [ 0.86666667  0.13333333]]
+unweighted acc:	0.520614035088
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+1.8085355987287548	0.62671232876712324
+collected confusion matrix
+[array([[ 0.83091787,  0.16908213],
+       [ 0.87058824,  0.12941176]])]
+average confusion matrix
+av_valence
+[[172  35]
+ [ 74  11]]
+[[ 0.83091787  0.16908213]
+ [ 0.87058824  0.12941176]]
+unweighted acc:	0.480164819551
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+1.4288105505593816	0.58074534161490687
+collected confusion matrix
+[array([[ 0.69957082,  0.30042918],
+       [ 0.73033708,  0.26966292]])]
+average confusion matrix
+av_valence
+[[163  70]
+ [ 65  24]]
+[[ 0.69957082  0.30042918]
+ [ 0.73033708  0.26966292]]
+unweighted acc:	0.484616868399
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.71005545382027158	0.60960961068356723
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.72065022364035025	0.33933934077128275
+0.72065023509589754	0.33933934077128275
+0.72065022936812395	0.33933934077128275
+0.72065024082367124	0.33933934077128275
+collected confusion matrix
+[array([[ 0.0877193 ,  0.9122807 ],
+       [ 0.11428571,  0.88571429]])]
+average confusion matrix
+av_valence
+[[ 20 208]
+ [ 12  93]]
+[[ 0.0877193   0.9122807 ]
+ [ 0.11428571  0.88571429]]
+unweighted acc:	0.48671679198
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.71488340373511783	0.58558558665954319
+collected confusion matrix
+[array([[ 0.71929825,  0.28070175],
+       [ 0.7047619 ,  0.2952381 ]])]
+average confusion matrix
+av_valence
+[[164  64]
+ [ 74  31]]
+[[ 0.71929825  0.28070175]
+ [ 0.7047619   0.2952381 ]]
+unweighted acc:	0.507268170426
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.83896227895397024	0.54109589041095896
+collected confusion matrix
+[array([[ 0.57487923,  0.42512077],
+       [ 0.54117647,  0.45882353]])]
+average confusion matrix
+av_valence
+[[119  88]
+ [ 46  39]]
+[[ 0.57487923  0.42512077]
+ [ 0.54117647  0.45882353]]
+unweighted acc:	0.516851378232
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.72069660439994765	0.46273291925465837
+collected confusion matrix
+[array([[ 0.43776824,  0.56223176],
+       [ 0.47191011,  0.52808989]])]
+average confusion matrix
+av_valence
+[[102 131]
+ [ 42  47]]
+[[ 0.43776824  0.56223176]
+ [ 0.47191011  0.52808989]]
+unweighted acc:	0.482929063992
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.72200676700374389	0.47447447554843203
+collected confusion matrix
+[array([[ 0.50877193,  0.49122807],
+       [ 0.6       ,  0.4       ]])]
+average confusion matrix
+av_valence
+[[116 112]
+ [ 63  42]]
+[[ 0.50877193  0.49122807]
+ [ 0.6         0.4       ]]
+unweighted acc:	0.454385964912
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.8325999599613555	0.59589041095890416
+collected confusion matrix
+[array([[ 0.74396135,  0.25603865],
+       [ 0.76470588,  0.23529412]])]
+average confusion matrix
+av_valence
+[[154  53]
+ [ 65  20]]
+[[ 0.74396135  0.25603865]
+ [ 0.76470588  0.23529412]]
+unweighted acc:	0.489627735152
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 30 -p 10 -l2 0.0001
+0.82312564968322377	0.42236024844720499
+collected confusion matrix
+[array([[ 0.34763948,  0.65236052],
+       [ 0.38202247,  0.61797753]])]
+average confusion matrix
+av_valence
+[[ 81 152]
+ [ 34  55]]
+[[ 0.34763948  0.65236052]
+ [ 0.38202247  0.61797753]]
+unweighted acc:	0.482808506534
+REC test!=valid 1 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 15 -p 5 -l2 0.0001
+0.70872786471077631	0.46546546636043012
+collected confusion matrix
+[array([[ 0.4122807 ,  0.5877193 ],
+       [ 0.41904762,  0.58095238]])]
+average confusion matrix
+av_valence
+[[ 94 134]
+ [ 44  61]]
+[[ 0.4122807   0.5877193 ]
+ [ 0.41904762  0.58095238]]
+unweighted acc:	0.496616541353
+REC test!=valid 2 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 15 -p 5 -l2 0.0001
+0.75429057176798986	0.3047945205479452
+collected confusion matrix
+[array([[ 0.04830918,  0.95169082],
+       [ 0.07058824,  0.92941176]])]
+average confusion matrix
+av_valence
+[[ 10 197]
+ [  6  79]]
+[[ 0.04830918  0.95169082]
+ [ 0.07058824  0.92941176]]
+unweighted acc:	0.488860471725
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 15 -p 5 -l2 0.0001
+0.66203968791487799	0.63354037267080743
+collected confusion matrix
+[array([[ 0.77682403,  0.22317597],
+       [ 0.74157303,  0.25842697]])]
+average confusion matrix
+av_valence
+[[181  52]
+ [ 66  23]]
+[[ 0.77682403  0.22317597]
+ [ 0.74157303  0.25842697]]
+unweighted acc:	0.517625500313
+REC test!=valid 3 LSPEC IMG -dnn_depth 2 --v_u_lstm -r_valid 0.1 -b 128 -e 15 -p 5 -l2 0.0001
