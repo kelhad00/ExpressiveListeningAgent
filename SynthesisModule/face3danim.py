@@ -55,7 +55,7 @@ def get3d_data(file_name, file_type='openface'):
     n_frames = data.shape[0]
     return point_all, n_frames
 
-
+#TODO change this concatenation function
 def concat_point(exp1, exp2):
     nr_frame1 = exp1[0].shape[1]
     nr_frame2 = exp2[0].shape[1]
@@ -70,7 +70,6 @@ def concat_point(exp1, exp2):
             #points_concat[nr_point][:,nr_frame1 + t] = exp1[nr_point][:,0] + variation
             points_concat[nr_point][:, nr_frame1 + t] = exp1[nr_point][:, nr_frame1 - 1] + variation
     return points_concat
-
 
 def update_lines(num, dataLines, lines):
     for line, data in zip(lines, dataLines):
