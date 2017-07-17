@@ -29,3 +29,9 @@ python ./emotion_baseline_scripts/run_baseline.py -delay 1.2 --text --audio --vi
 
 #sparse PCA and decision tree
 python ./emotion_baseline_scripts/run_baseline.py -delay 1.2 --arousal --text --audio --video -path_audio ./audio_features_xbow_6s/ -path_video ./video_features_xbow_6s/ -path_text ./text_features_xbow_6s/ -path_save_train_feat ./tsne/abox.vbox.tbox.train.spca.csv -path_save_devel_feat ./tsne/abox.vbox.tbox.devel.spca.csv --spca --dc_tree
+
+#use pre-saved (dimension reduced) features
+python ./emotion_baseline_scripts/run_baseline.py -delay 1.2 --arousal --path_train ./analysis/temp_feat/abox.vbox.tbox.train.spca.csv --path_devel ./analysis/temp_feat/abox.vbox.tbox.devel.spca.csv
+
+#kernel PCA and decision tree
+python ./emotion_baseline_scripts/run_baseline.py -delay 1.2 --arousal --text --audio --video -path_audio ./audio_features_xbow_6s/ -path_video ./video_features_xbow_6s/ -path_text ./text_features_xbow_6s/ -path_save_train_feat ./tsne/abox.vbox.tbox.train.kpca.csv -path_save_devel_feat ./tsne/abox.vbox.tbox.devel.kpca.csv -path_save_test_feat ./tsne/abox.vbox.tbox.test.kpca.csv --kpca
