@@ -5,15 +5,11 @@ import numpy as np
 
 from utils import Audio, Video, read_openface
 # from face3danim import get3d_data
-from expression import Expression, Happy, Sad, DATABASE
+from expression import Expression, Happy, Sad
 
-# x = Happy(3, 77)
-# print(x.frames.shape)
-# print(x.audio)
-
-# x = Sad(3, 77)
-# print(x.frames.shape)
-# print(x.audio)
+happy = Happy(1, 77)
+sad = Sad(1, 96)
+last_exp = sad
 
 
 # ===========================================================================
@@ -26,15 +22,16 @@ def logic(video):
 
 
 def callback(video):
-    video.play_frames(data2, queue=True)
-    print("END")
+    global last_exp
+    frames = last_exp.concat(video.last_frame)
+    # flip the expression
+    last_exp = happy if last_exp == sad else happy
+    video.play_frames(frames, queue=True)
     video.audio.play("data/n9.wav")
+    print("END")
 
 b = Video()
-# data = get3d_data('database/happy_1_77.csv')
-data1 = read_openface(os.path.join(DATABASE, 'happy_1_77.csv'))
-data2 = read_openface(os.path.join(DATABASE, 'sad_1_96.csv'))
-b.play_frames(data1)
+b.play_frames(happy.frames)
 b.set_callback(end_frames=callback, logic_processing=logic)
 b.run()
 # b.terminate()

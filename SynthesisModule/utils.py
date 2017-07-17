@@ -95,16 +95,28 @@ class Audio(object):
         self._channel.fadeout(ms)
         return self
 
-    def stop(self):
-        self._channel.stop()
+    def stop(self, path=None):
+        if path is not None:
+            path = os.path.abspath(path)
+            self._audio[path].stop()
+        else:
+            self._channel.stop()
         return self
 
-    def pause(self):
-        self._channel.pause()
+    def pause(self, path=None):
+        if path is not None:
+            path = os.path.abspath(path)
+            self._audio[path].pause()
+        else:
+            self._channel.pause()
         return self
 
-    def resume(self):
-        self._channel.resume()
+    def resume(self, path=None):
+        if path is not None:
+            path = os.path.abspath(path)
+            self._audio[path].unpause()
+        else:
+            self._channel.unpause()
         return self
 
     def terminate(self):
@@ -154,6 +166,7 @@ class Video(object):
         # ====== all callback function ====== #
         self._end_frames = lambda video: None
         self._logic_processing = lambda video: None
+        self._last_frame = None
 
     def set_callback(self, end_frames=None, logic_processing=None):
         """ This callback is called when the data is exhausted. """
@@ -162,6 +175,10 @@ class Video(object):
         if logic_processing is not None and callable(logic_processing):
             self._logic_processing = logic_processing
         return self
+
+    @property
+    def last_frame(self):
+        return self._last_frame
 
     @property
     def data_frames(self):
@@ -223,7 +240,8 @@ class Video(object):
             self._curr_time = new_time
             # get the frames
             if len(self._frames) > 0:
-                for line, point in zip(lines, self._frames.pop()):
+                self._last_frame = self._frames.pop()
+                for line, point in zip(lines, self._last_frame):
                     line.set_data(point[:2])
                     line.set_3d_properties(point[-1:])
             else:
