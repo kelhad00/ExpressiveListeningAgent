@@ -154,19 +154,27 @@ def read_openface(f):
 
 class Video(object):
 
-    def __init__(self, fps=30):
+    def __init__(self, fps=30, logging=True):
         super(Video, self).__init__()
         # ====== control properties ====== #
-        self._frames = []
+        self._frame_id = 0
+        self._frames = [] # list of [(name, frames), ...]
         self._animation = None
         self._spf = 1. / fps # second per frame
+        # ====== audio ====== #
         self._audio_player = Audio()
-        # ====== internal states ====== #
+        self._audio_map = {} # mapping expression name to audio path
+        # ====== internal states and tracking ====== #
         self._curr_time = 0
+        self._curr_frames = None
+        self._last_frame = None
+        self._last_name = None
         # ====== all callback function ====== #
         self._end_frames = lambda video: None
         self._logic_processing = lambda video: None
-        self._last_frame = None
+        # ====== logging ====== #
+        self.logging = logging
+        self.shit = 0
 
     def set_callback(self, end_frames=None, logic_processing=None):
         """ This callback is called when the data is exhausted. """
@@ -176,10 +184,20 @@ class Video(object):
             self._logic_processing = logic_processing
         return self
 
+    # ==================== Current states ==================== #
     @property
     def last_frame(self):
         return self._last_frame
 
+    @property
+    def last_name(self):
+        return self._last_name
+
+    @property
+    def curr_frames(self):
+        return self._curr_frames
+
+    # ==================== Attributes ==================== #
     @property
     def data_frames(self):
         return self._frames
@@ -192,21 +210,42 @@ class Video(object):
     def audio(self):
         return self._audio_player
 
-    def play_frames(self, data, queue=True):
+    # ==================== controller ==================== #
+    def play_frames(self, data, name=None, queue=True):
         # ====== check data ====== #
         if data.ndim != 3 and data.shape[1] != NB_POINTS_PER_FRAMES:
             raise ValueError("`data` must has shape (nb_frames, 68, 3).")
+        # ====== check name ====== #
+        self._frame_id += 1
+        if name is None:
+            name = "Frame%d" % self._frame_id
+        else:
+            name = str(name)
+        # ====== add frames ====== #
         if not queue:
             self._frames = []
-        for x in data:
-            self._frames.append(x)
+        self._frames.append((name, [x for x in data]))
+        return self
+
+    def play_expression(self, exp):
+        frames = [x for x in exp.frames]
+        audio = exp.audio
+        self._frames.append((exp.name, frames))
+        self._audio_map[exp.name] = audio
         return self
 
     def run(self):
         """Given the fact that we try hard, this method still blocking after
         we call plt.show"""
-        if len(self.data_frames) == 0:
+        if len(self._frames) == 0 and len(self._frames[-1][-1]) == 0:
             raise RuntimeError("No frames data found!")
+        # assign first current frames
+        self._curr_frames = self._frames.pop()
+        name = self._curr_frames[0]
+        if name in self._audio_map:
+            self._log("Audio", "Playing %s" % (self._audio_map[name]))
+            self._audio_player.play(self._audio_map[name])
+        # create the animation
         if self._animation is None:
             def infinite_iterator():
                 while True: yield 8
@@ -220,7 +259,7 @@ class Video(object):
             ax.disable_mouse_rotation()
             # create dummy point
             lines = [ax.plot([x], [y], [z], 'k.', animated=True)[0]
-                     for x, y, z in self._frames.pop()]
+                     for x, y, z in self._curr_frames[-1].pop()]
             self._animation = animation.FuncAnimation(fig=fig,
                 func=lambda num, lines: self._update(lines),
                 frames=infinite_iterator(),
@@ -236,17 +275,37 @@ class Video(object):
         self._logic_processing(self)
         # ====== update frames ====== #
         new_time = time.time()
+        print(new_time - self.shit)
+        self.shit = new_time
         if new_time - self._curr_time >= self._spf:
             self._curr_time = new_time
-            # get the frames
-            if len(self._frames) > 0:
-                self._last_frame = self._frames.pop()
-                for line, point in zip(lines, self._last_frame):
-                    line.set_data(point[:2])
-                    line.set_3d_properties(point[-1:])
-            else:
-                self._end_frames(self)
+            # callback end_frames
+            if len(self._curr_frames[-1]) == 0:
+                if len(self._frames) == 0:
+                    self._log("Video", "End of frames")
+                    self._end_frames(self)
+                    return lines
+                else: # start new expression
+                    self._curr_frames = self._frames.pop()
+                    name = self._curr_frames[0]
+                    if name in self._audio_map:
+                        self._log("Audio", "Playing %s" % (self._audio_map[name]))
+                        self._audio_player.play(self._audio_map[name])
+            # processing frames
+            name, frames = self._curr_frames
+            self._log("Video", "Playing %s, remain: %d" % (name, len(frames)))
+            # store last states
+            self._last_frame = frames.pop()
+            self._last_name = name
+            # set new frames
+            for line, point in zip(lines, self._last_frame):
+                line.set_data(point[:2])
+                line.set_3d_properties(point[-1:])
         return lines
+
+    def _log(self, tag, msg):
+        if self.logging:
+            print("[Player] (%s): %s" % (tag, msg))
 
     def terminate(self):
         # stop stream (4)

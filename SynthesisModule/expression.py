@@ -31,7 +31,13 @@ def _searching_expression(name, level, nframes, extension):
     if len(all_files) == 0:
         raise ValueError("Cannot file any file with, "
             "name:%s, level:%d, nframes:%d, ext:%s" % (name, level, nframes, extension))
-    return os.path.join(DATABASE, all_files[0])
+    # ====== found file ====== #
+    found = all_files[0]
+    desire_name = "%s_%d_%d" % (name, level, nframes)
+    if found.split('.')[0] != desire_name:
+        print("[WARNING] Request expression with configuration: %-12s, but only "
+            "found expression: %-12s" % (desire_name, found.split('.')[0]))
+    return os.path.join(DATABASE, found)
 
 
 # ===========================================================================
@@ -51,10 +57,15 @@ class Expression(object):
         self._name = self.__class__.__name__.lower()
         self._level = level
         self._nframes = nframes
-        self._frames = read_openface(_searching_expression(
-            self._name, self._level, self._nframes, '.csv'))
-        self._audio = _searching_expression(
-            self._name, self._level, self._nframes, '.wav')
+        # ====== find appropriate frames file ====== #
+        _ = _searching_expression(self._name, self._level, self._nframes, '.csv')
+        self._frames = read_openface(_)
+        # infer audio file name from frames file name
+        _ = os.path.basename(_).split('.')[0] + '.wav'
+        self._audio = os.path.join(DATABASE, _)
+        if not os.path.exists(self._audio):
+            raise RuntimeError("Cannot find audio file for the expression: %s, "
+                "at path: %s" % (self.name, self._audio))
 
     def __getitem__(self, idx):
         return self._frames[idx]
@@ -101,22 +112,20 @@ def interpolation(last_frame, first_frame, nFrames):
 
 
     def merge(self, expr):
-        pass
+        raise NotImplementedError
 
-    def length(self, nframes):
-        pass
+    def adjust(self, length, nframes):
+        raise NotImplementedError
 
-    def intensity(self, level):
-        pass
 
 # NOTE: you only need to name the class matching the expression name.
-
-
 class Happy(Expression):
-
     pass
 
 
 class Sad(Expression):
+    pass
 
+
+class Laugh(Expression):
     pass
