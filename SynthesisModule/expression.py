@@ -7,7 +7,7 @@ from six import add_metaclass
 from abc import abstractmethod, abstractproperty, ABCMeta
 import numpy as np
 
-from utils import read_openface, AudioData
+from utils import read_openface
 
 # ===========================================================================
 # Helper
@@ -39,7 +39,12 @@ def _searching_expression(name, level, nframes, extension):
 # ===========================================================================
 @add_metaclass(ABCMeta)
 class Expression(object):
-    """ Expression """
+    """ Expression
+    Attributes
+    ----------
+    frames: ndarray [nb_frames x nb_points_per_frames(68) x 3(x,y,z)]
+    audio: str (path to wav file)
+    """
 
     def __init__(self, level, nframes):
         super(Expression, self).__init__()
@@ -48,8 +53,11 @@ class Expression(object):
         self._nframes = nframes
         self._frames = read_openface(_searching_expression(
             self._name, self._level, self._nframes, '.csv'))
-        self._audio = AudioData(_searching_expression(
-            self._name, self._level, self._nframes, '.wav'))
+        self._audio = _searching_expression(
+            self._name, self._level, self._nframes, '.wav')
+
+    def __getitem__(self, idx):
+        return self._frames[idx]
 
     @property
     def name(self):
@@ -70,6 +78,26 @@ class Expression(object):
     @property
     def audio(self):
         return self._audio
+
+    def __str__(self):
+        return "<[%s] level:%d #frames:%d audio:%s>" % \
+        (self.__class__.__name__, self._level, self._nframes, self._audio)
+
+    # ==================== Frames manipulation ==================== #
+    def concat(self, last_frame):
+        offset = self._frames[1:] - self._frames[:-1]
+        offset = np.cumsum(offset, axis=0)
+        last_frame = np.expand_dims(last_frame, 0)
+        return offset + last_frame
+
+    def merge(self, expr):
+        pass
+
+    def length(self, nframes):
+        pass
+
+    def intensity(self, level):
+        pass
 
 # NOTE: you only need to name the class matching the expression name.
 
