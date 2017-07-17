@@ -229,7 +229,7 @@ class Video(object):
                 repeat=False,
                 repeat_delay=None,
                 blit=True)
-            plt.ioff(); plt.show(block=False)
+            plt.ioff(); plt.show(block=True)
 
     def _update(self, lines):
         # ====== processing the logic ====== #

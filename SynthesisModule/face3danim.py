@@ -117,5 +117,5 @@ ax.set_title('3D Plot Test')
 # 'interval is millisecond
 ani = animation.FuncAnimation(fig, update_lines, n, fargs=(expression_all, lines),
                               interval=33, blit=False, repeat=True, repeat_delay=-1)
-plt.show(block=False)
+plt.show(block=True)
 print("TEST!!!!!!!!!!!")
