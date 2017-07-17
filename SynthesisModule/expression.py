@@ -7,7 +7,7 @@ from six import add_metaclass
 from abc import abstractmethod, abstractproperty, ABCMeta
 import numpy as np
 
-from utils import read_openface, AudioData
+from utils import read_openface
 
 # ===========================================================================
 # Helper
@@ -48,8 +48,8 @@ class Expression(object):
         self._nframes = nframes
         self._frames = read_openface(_searching_expression(
             self._name, self._level, self._nframes, '.csv'))
-        self._audio = AudioData(_searching_expression(
-            self._name, self._level, self._nframes, '.wav'))
+        self._audio = _searching_expression(
+            self._name, self._level, self._nframes, '.wav')
 
     @property
     def name(self):
@@ -70,6 +70,19 @@ class Expression(object):
     @property
     def audio(self):
         return self._audio
+
+    # ==================== Frames manipulation ==================== #
+    def concat(self, expr):
+        pass
+
+    def merge(self, expr):
+        pass
+
+    def length(self, nframes):
+        pass
+
+    def intensity(self, level):
+        pass
 
 # NOTE: you only need to name the class matching the expression name.
 
