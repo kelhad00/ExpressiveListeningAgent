@@ -39,9 +39,10 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-path_train", "--path_train", dest= 'path_train', type=str, help="path train (only if all data speaker sets are merged)")
 parser.add_argument("-path_devel", "--path_devel", dest= 'path_devel', type=str, help="path devel (only if all data speaker sets are merged)")
+parser.add_argument("-path_test", "--path_test", dest= 'path_test', type=str, help="path test (only if all data speaker sets are merged)")
+parser.add_argument("-delim", "--delim", dest= 'delim', type=str, help="deliminator for features", default = ",")
 
-
-parser.add_argument("-path_test", "--path_test_predictions", dest= 'path_test_predictions', type=str, help="prediction folder", default = "test_predictions/")
+parser.add_argument("-path_test_folder", "--path_test_predictions", dest= 'path_test_predictions', type=str, help="prediction folder", default = "test_predictions/")
 parser.add_argument("-path_audio", "--path_audio_features", dest= 'path_audio_features', type=str, help="path_audio_features", default = "audio_features_xbow_6s/")
 parser.add_argument("-path_video", "--path_video_features", dest= 'path_video_features', type=str, help="path_video_features", default = "video_features_xbow_6s/")
 parser.add_argument("-path_text", "--path_text_features", dest= 'path_text_features', type=str, help="path_text_features", default = "text_features_xbow_6s/")
@@ -49,7 +50,7 @@ parser.add_argument("-path_labels", "--path_labels", dest= 'path_labels', type=s
 
 parser.add_argument("-path_save_train_feat", "--path_save_train_feat", dest= 'path_save_train_feat', type=str, help="path to save train features")
 parser.add_argument("-path_save_devel_feat", "--path_save_devel_feat", dest= 'path_save_devel_feat', type=str, help="path to save devel features")
-
+parser.add_argument("-path_save_test_feat", "--path_save_test_feat", dest= 'path_save_test_feat', type=str, help="path to save test features")
 
 parser.add_argument("-delay", "--delay", dest= 'delay', type=float, help="delay(Sec)", default = 0.0)
 parser.add_argument("--audio", help="audio", action="store_true")
@@ -122,13 +123,19 @@ if not b_test_available and not os.path.exists(path_test_predictions):
     os.mkdir(path_test_predictions)
 
 if args.path_train and args.path_devel:
-    data = np.genfromtxt (args.path_train, delimiter="\t")
-    Train = data[:,0:(data.shape[1] - 2)]
-    Train_L = data[:,(data.shape[1] - 2):(data.shape[1])]
+    data = np.genfromtxt (args.path_train, delimiter=args.delim)
+    Train = data[:,0:(data.shape[1] - 3)]
+    Train_L = data[:,(data.shape[1] - 3):(data.shape[1]) ]
 
-    data = np.genfromtxt (args.path_devel, delimiter="\t")
-    Devel = data[:,0:(data.shape[1] - 2)]
-    Devel_L = data[:,(data.shape[1] - 2):(data.shape[1])]
+    data = np.genfromtxt (args.path_devel, delimiter=args.delim)
+    Devel = data[:,0:(data.shape[1] - 3)]
+    Devel_L = data[:,(data.shape[1] - 3):(data.shape[1])]
+    
+    if args.path_test:
+        data = np.genfromtxt (args.path_test, delimiter=args.delim)
+        Test = data[:,0:(data.shape[1] - 3)]
+    else:
+        Test = Devel
 else:
     # Compensate the delay (quick solution)
     shift = int(np.round(delay/sr_labels))
@@ -144,11 +151,11 @@ else:
     Train_L = load_all( files_train, [ path_labels ] )  # Labels are not shifted
     Devel_L = load_all( files_devel, [ path_labels ] )
 
-if b_test_available:
-    Test   = load_all( files_test, path_features, shift )
-    Test_L = load_all( files_test, [ path_labels ] )  # Test labels are not available in the challenge
-else:
-    Test   = load_all( files_test, path_features, shift, separate=True )  # Load test features separately to store the predictions in separate files
+    if b_test_available:
+        Test   = load_all( files_test, path_features, shift )
+        Test_L = load_all( files_test, [ path_labels ] )  # Test labels are not available in the challenge
+    else:
+        Test   = load_all( files_test, path_features, shift, separate=True )  # Load test features separately to store the predictions in separate files
 
 print("Original features")
 print("Train feature shape: ", Train.shape)
@@ -203,9 +210,9 @@ print("Devel feature shape: ", Devel.shape)
 print("Devel_L feature shape: ", Devel_L.shape)
 
 if args.path_save_train_feat:
-    np.savetxt(args.path_save_train_feat,  np.append(Train, Train_L, axis=1), delimiter=',')
+    np.savetxt(args.path_save_train_feat,  np.append(Train, Train_L, axis=1), delimiter=args.delim)
 if args.path_save_devel_feat:
-    np.savetxt(args.path_save_devel_feat,  np.append(Devel, Devel_L, axis=1), delimiter=',')
+    np.savetxt(args.path_save_devel_feat,  np.append(Devel, Devel_L, axis=1), delimiter=args.delim)
 
 print("Test feature shape: ", Test.shape)
 if b_test_available:
@@ -255,36 +262,23 @@ comp_opt_L = complexities[ind_opt_L]
 TrainDevel   = np.concatenate((Train, Devel), axis=0)
 TrainDevel_L = np.concatenate((Train_L, Devel_L), axis=0)
 
-if args.pca:
-    print("PCA transforming...")
-    pca = PCA(n_components=args.pl_dim)
-    TrainDevel = pca.fit_transform(TrainDevel)
-elif args.spca:
-    print("SparsePCA transforming...")
-    pca = SparsePCA(n_components=args.pl_dim)
-    TrainDevel = pca.fit_transform(TrainDevel)
-elif args.kpca:
-    print("KernelPCA transforming...")
-    pca = KernelPCA(n_components=args.pl_dim)
-    TrainDevel = pca.fit_transform(TrainDevel)
-elif args.ipca:
-    print("i-PCA transforming...")
-    ipca = IncrementalPCA(batch_size=args.ipca_batch, copy=True, n_components=args.pl_dim, whiten=True)
-    TrainDevel = ipca.fit_transform(TrainDevel)
-elif args.lda:
-    print("LDA transforming...")
-    lda = LDA(n_components=args.pl_dim)
-    if args.arousal:
-        labels = TrainDevel[:,0]
-    elif args.valence:
-        labels = TrainDevel[:,1]
-    elif args.liking:
-        labels = TrainDevel[:,2]
-    
-    lda = lda.fit(TrainDevel, labels) #learning the projection matrix
-    TrainDevel = lda.transform(TrainDevel)
-
 print("Finding optimal param: ", comp_opt_A, ", ", comp_opt_V, ", ", comp_opt_L)
+
+# Print scores (CCC, PCC, RMSE) on the development set
+if args.arousal:
+    print("Arousal devel (CCC,PCC,RMSE):")
+    print(scores_devel_A[ind_opt_A,:])
+if args.valence:
+    print("Valence devel (CCC,PCC,RMSE):")
+    print(scores_devel_V[ind_opt_V,:])
+if args.liking:
+    print("Liking  devel (CCC,PCC,RMSE):")
+    print(scores_devel_L[ind_opt_L,:])
+
+if args.path_train and args.path_devel and args.path_test == None:
+    print("No test set is given")
+    exit(1)
+
 
 if args.arousal:
     model_A = build_model(args, comp_opt_A, seed) #svm.LinearSVR(C=comp_opt_A,random_state=seed)
@@ -310,6 +304,7 @@ else:
     for f in range(0,len(files_test)):
         
         if args.pca:
+            pca = PCA(n_components=args.pl_dim)
             Test[f] = pca.fit_transform(Test[f])
         elif args.spca:
             pca = SparsePCA(n_components=args.pl_dim)
@@ -334,17 +329,9 @@ else:
             predictions = np.array([predA,predV,predL])
             write_predictions(path_test_predictions,files_test[f],predictions,sr_labels)
 
+if args.path_save_test_feat:
+    np.savetxt(args.path_save_test_feat ,  Test, delimiter=args.delim)
 
-# Print scores (CCC, PCC, RMSE) on the development set
-if args.arousal:
-    print("Arousal devel (CCC,PCC,RMSE):")
-    print(scores_devel_A[ind_opt_A,:])
-if args.valence:
-    print("Valence devel (CCC,PCC,RMSE):")
-    print(scores_devel_V[ind_opt_V,:])
-if args.liking:
-    print("Liking  devel (CCC,PCC,RMSE):")
-    print(scores_devel_L[ind_opt_L,:])
 
 if args.write_result:
     if b_test_available:
