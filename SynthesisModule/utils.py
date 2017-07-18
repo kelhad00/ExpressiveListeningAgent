@@ -128,6 +128,7 @@ class Audio(object):
 # Video player
 # ===========================================================================
 NB_POINTS_PER_FRAMES = 68
+_TMP = [0]
 
 
 def read_openface(f):
@@ -161,6 +162,7 @@ class Video(object):
         self._frames = [] # list of [(name, frames), ...]
         self._animation = None
         self._spf = 1. / fps # second per frame
+        self._actual_spf = None
         # ====== audio ====== #
         self._audio_player = Audio()
         self._audio_map = {} # mapping expression name to audio path
@@ -174,7 +176,7 @@ class Video(object):
         self._logic_processing = lambda video: None
         # ====== logging ====== #
         self.logging = logging
-        self.shit = 0
+        self._warm_up = []
 
     def set_callback(self, end_frames=None, logic_processing=None):
         """ This callback is called when the data is exhausted. """
@@ -267,17 +269,27 @@ class Video(object):
                 interval=1, # 1ms delay
                 repeat=False,
                 repeat_delay=None,
-                blit=True)
+                blit=False)
             plt.ioff(); plt.show(block=True)
 
     def _update(self, lines):
+        new_time = time.time()
+        # ====== warm process, estimate the actual FPS ====== #
+        if len(self._warm_up) < 12:
+            if _TMP[0] == 0:
+                _TMP[0] = new_time
+            else:
+                self._warm_up.append(new_time - _TMP[0])
+                _TMP[0] = new_time
+            return lines
+        if self._actual_spf is None:
+            self._actual_spf = np.mean(self._warm_up)
         # ====== processing the logic ====== #
         self._logic_processing(self)
         # ====== update frames ====== #
-        new_time = time.time()
-        print(new_time - self.shit)
-        self.shit = new_time
         if new_time - self._curr_time >= self._spf:
+            print(new_time - self._curr_time)
+            curr_fps = 1. / (new_time - self._curr_time)
             self._curr_time = new_time
             # callback end_frames
             if len(self._curr_frames[-1]) == 0:
@@ -293,7 +305,8 @@ class Video(object):
                         self._audio_player.play(self._audio_map[name])
             # processing frames
             name, frames = self._curr_frames
-            self._log("Video", "Playing %s, remain: %d" % (name, len(frames)))
+            self._log("Video", "Playing %s, remain: %d, fps: %.2f, a-fps: %.2f, c-fps: %.2f" %
+                (name, len(frames), 1. / self._spf, 1. / self._actual_spf, curr_fps))
             # store last states
             self._last_frame = frames.pop()
             self._last_name = name
