@@ -101,15 +101,12 @@ class Expression(object):
         last_frame = np.expand_dims(last_frame, 0)
         return offset + last_frame
 
-def interpolation(last_frame, first_frame, nFrames):
+# def interpolation(last_frame, first_frame, nFrames):
 
-    for i in range(nFrames):
-        temp = [(1-i/float(nFrames-1))*x + (i/float(nFrames-1))*y for x, y in zip(last_frame, first_frame)]
-        interpolated.append([temp])
-    return interpolated
-
-
-
+#     for i in range(nFrames):
+#         temp = [(1-i/float(nFrames-1))*x + (i/float(nFrames-1))*y for x, y in zip(last_frame, first_frame)]
+#         interpolated.append([temp])
+#     return interpolated
 
     def merge(self, expr):
         raise NotImplementedError

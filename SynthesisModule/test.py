@@ -4,7 +4,6 @@ import os
 import numpy as np
 
 from utils import Audio, Video, read_openface
-# from face3danim import get3d_data
 from expression import Happy, Sad, Laugh
 
 happy = Happy(1, 76)
@@ -33,7 +32,8 @@ def callback(video):
     # print("END")
 
 b = Video()
-b.play_expression(laugh)
+# b.play_expression(laugh)
+b.play_frames(happy.frames)
 b.set_callback(end_frames=callback, logic_processing=logic)
 b.run()
 # b.terminate()
