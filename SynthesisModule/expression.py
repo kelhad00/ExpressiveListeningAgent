@@ -117,6 +117,11 @@ class Expression(object):
 
     # ==================== Frames manipulation ==================== #
     def set_reference(self, frame):
+        """ Use a frame as a reference for this expression
+        * Calculating the cummulative differences of all frames to the first
+        frame of this expression.
+        * Adding the differences to the reference frame.
+        """
         frame = np.expand_dims(frame, 0)
         if frame.shape != (1,) + self.frames.shape[1:]:
             raise ValueError("Reference frame must have shape: %s" %
@@ -127,6 +132,8 @@ class Expression(object):
         return self
 
     def concat(self, last_frame, interp=5):
+        """
+        """
         # ====== interpolate first ====== #
         interp = interpolate(last_frame, self.frames[0], nFrames=interp)
         # ====== adding offset ====== #
