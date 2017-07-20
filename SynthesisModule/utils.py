@@ -1,8 +1,10 @@
 # ===========================================================================
 # Require packages:
-# * wave
+# * pygame (for playing audio)
 # * numpy
+# * soundfile (for saving audio)
 # * pandas
+# * ffmpeg (for converting gif + wav => mp4)
 # ===========================================================================
 from __future__ import print_function, division, absolute_import
 
@@ -17,8 +19,9 @@ import time
 from six import string_types
 
 import numpy as np
-# for audio
 from pygame import mixer
+import soundfile as sf
+
 # for video
 from matplotlib import animation
 from matplotlib import pyplot as plt
@@ -28,6 +31,20 @@ import mpl_toolkits.mplot3d.axes3d as p3
 # ===========================================================================
 # Audio manipulation
 # ===========================================================================
+def resample_audio(s, fs_orig, fs_new):
+    '''
+    '''
+    fs_orig = int(fs_orig)
+    fs_new = int(fs_new)
+    if fs_new > fs_orig:
+        raise ValueError("Do not support upsampling audio from %d(Hz) to %d(Hz)."
+            % (fs_orig, fs_new))
+    elif fs_orig != fs_new:
+        import resampy
+        s = resampy.resample(s.astype('float32'), sr_orig=fs_orig, sr_new=fs_new)
+    return s
+
+
 class Audio(object):
     """
     Parameters
@@ -161,7 +178,6 @@ class Video(object):
         self._frames = [] # list of [(name, frames), ...]
         self._animation = None
         self._spf = 1. / fps # second per frame
-        self._actual_spf = None
         # ====== audio ====== #
         self._audio_player = Audio()
         self._audio_map = {} # mapping expression name to audio path
@@ -224,16 +240,19 @@ class Video(object):
         # ====== add frames ====== #
         if not queue:
             self._frames = []
-        self._frames.append((name, [x for x in data]))
+        # reverse the frames order
+        self._frames.append((name, [x for x in data][::-1]))
         return self
 
     def play_expression(self, exp):
-        frames = [x for x in exp.frames]
+        # reverse the frames order
+        frames = [x for x in exp.frames][::-1]
         audio = exp.audio
         self._frames.append((exp.name, frames))
         self._audio_map[exp.name] = audio
         return self
 
+    # ==================== Running ==================== #
     def run(self):
         """Given the fact that we try hard, this method still blocking after
         we call plt.show"""
@@ -269,6 +288,95 @@ class Video(object):
                 repeat_delay=None,
                 blit=True)
             plt.ioff(); plt.show(block=True)
+
+    def save(self, path, dpi=None, sr=8000, mismatch_threshold=0.5,
+             keep_cache=False):
+        """
+        mismatch_threshold: float, the threshold for difference between
+            audio and video duration (in second)
+        """
+        path = path.split(".")[0]
+        if len(self._frames) == 0 and len(self._frames[-1][-1]) == 0:
+            raise RuntimeError("No frames data found!")
+        # ====== get all frames and audio ====== #
+        frames = []
+        audio = []
+        duration = [] # in second
+        for name, f in self._frames[::-1]:
+            frames += f
+            audio.append(None if name not in self._audio_map
+                        else self._audio_map[name])
+            duration.append(len(f) * self._spf)
+        # reset the internal frames
+        self._frames = []
+        # ====== save the audio ====== #
+        audio = [(np.zeros(shape=(int(length * sr),)), sr) if i is None
+                 else sf.read(i)
+                 for i, length in zip(audio, duration)]
+        audio = [resample_audio(i, fs_orig=j, fs_new=sr) for i, j in audio]
+        # valiate audio duration match frames duration
+        for y, frame_dur in zip(audio, duration):
+            audio_dur = len(y) / sr
+            if np.abs(audio_dur - frame_dur) > mismatch_threshold:
+                raise RuntimeError("Audio and video duratoin mismatch: %.2f != %.2f"
+                    % (audio_dur, frame_dur))
+        # saving all the audio
+        self._log('Save', 'Saving audio file at path: %s.wav' % path)
+        with sf.SoundFile(file=path + '.wav', mode='w',
+                          samplerate=sr, channels=1) as f:
+            # have to reverse the audio to have the same order with the video
+            f.write(np.concatenate(audio[::-1]))
+        # ====== save all frames using Animation ====== #
+        fig = plt.figure(figsize=(6, 8), dpi=160)
+        ax = p3.Axes3D(fig)
+        ax.axis('off')
+        ax.grid(False)
+        ax.view_init(-10, 85)
+        ax.set_title('Avatar')
+        ax.set_zlim3d([100, -60])
+        ax.disable_mouse_rotation()
+        # create dummy point
+        lines = [ax.plot([x], [y], [z], 'k.', animated=True)[0]
+                 for x, y, z in frames.pop()]
+        N = len(frames)
+
+        def update(num, lines):
+            if len(frames) > 0:
+                if (N - len(frames)) % 25 == 0:
+                    self._log('Saved', '%d/%d frames' % (N - len(frames), N))
+                for line, point in zip(lines, frames.pop()):
+                    line.set_data(point[:2])
+                    line.set_3d_properties(point[-1:])
+            else:
+                self._log('Finnished', '%d/%d frames' % (N, N))
+            return lines
+
+        ani = animation.FuncAnimation(fig=fig,
+            func=update,
+            frames=range(N),
+            fargs=(lines,),
+            interval=self._spf * 1000, # delay in millisecond
+            repeat=False,
+            repeat_delay=None,
+            blit=True,
+            save_count=N)
+        self._log('Save', 'Saving animation at path: %s.gif' % path)
+        ani.save(path + '.gif', writer='imagemagick', fps=1. / self._spf, dpi=dpi)
+        # ====== merge audio and frames into mp4 ====== #
+        self._log('Save', 'Merging audio and frames into mp4 file: %s.mp4' % path)
+        try:
+            os.remove('%s.mp4' % path)
+        except Exception:
+            pass
+        os.system('ffmpeg -i %s.gif -i %s.wav -strict experimental %s.mp4' %
+            (path, path, path))
+        # ====== remove unecessary file ====== #
+        if not keep_cache:
+            try:
+                os.remove('%s.gif' % path)
+                os.remove('%s.wav' % path)
+            except Exception:
+                pass
 
     def _update(self, lines):
         new_time = time.time()

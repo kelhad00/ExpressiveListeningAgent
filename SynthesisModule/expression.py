@@ -40,6 +40,17 @@ def _searching_expression(name, level, nframes, extension):
     return os.path.join(DATABASE, found)
 
 
+def interpolate(last_frame, first_frame, nFrames):
+    res = []
+    for i in range(nFrames):
+        temp = [(1 - i / float(nFrames - 1)) * x + (i / float(nFrames - 1)) * y
+                for x, y in zip(last_frame, first_frame)]
+        temp = np.concatenate([t[None, :] for t in temp])[None, :]
+        res.append(temp)
+    res = np.concatenate(res, 0)
+    return res
+
+
 # ===========================================================================
 # Expression
 # ===========================================================================
@@ -90,23 +101,42 @@ class Expression(object):
     def audio(self):
         return self._audio
 
+    def copy(self):
+        clazz = self.__class__
+        obj = clazz.__new__(clazz)
+        obj._name = self._name
+        obj._level = self._level
+        obj._nframes = self._nframes
+        obj._frames = np.copy(self._frames)
+        obj._audio = self._audio
+        return obj
+
     def __str__(self):
         return "<[%s] level:%d #frames:%d audio:%s>" % \
         (self.__class__.__name__, self._level, self._nframes, self._audio)
 
     # ==================== Frames manipulation ==================== #
-    def concat(self, last_frame):
+    def set_reference(self, frame):
+        frame = np.expand_dims(frame, 0)
+        if frame.shape != (1,) + self.frames.shape[1:]:
+            raise ValueError("Reference frame must have shape: %s" %
+                self.frames.shape[1:])
         offset = self._frames[1:] - self._frames[:-1]
         offset = np.cumsum(offset, axis=0)
-        last_frame = np.expand_dims(last_frame, 0)
-        return offset + last_frame
+        self._frames = frame + offset
+        return self
 
-# def interpolation(last_frame, first_frame, nFrames):
-
-#     for i in range(nFrames):
-#         temp = [(1-i/float(nFrames-1))*x + (i/float(nFrames-1))*y for x, y in zip(last_frame, first_frame)]
-#         interpolated.append([temp])
-#     return interpolated
+    def concat(self, last_frame, interp=5):
+        # ====== interpolate first ====== #
+        interp = interpolate(last_frame, self.frames[0], nFrames=interp)
+        # ====== adding offset ====== #
+        offset = self._frames[1:] - self._frames[:-1]
+        offset = np.cumsum(offset, axis=0)
+        last_frame = np.expand_dims(interp[-1], 0)
+        offset = offset + last_frame
+        # ====== assign ====== #
+        self._frames = np.concatenate([interp, offset], axis=0)
+        return self
 
     def merge(self, expr):
         raise NotImplementedError
