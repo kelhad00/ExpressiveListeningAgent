@@ -414,7 +414,7 @@ class Video(object):
 
     def _log(self, tag, msg):
         if self.logging:
-            print("[Player] (%s): %s" % (tag, msg))
+            print("[VideoPlayer] (%s): %s" % (tag, msg))
 
     def terminate(self):
         # stop stream (4)

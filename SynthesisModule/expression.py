@@ -131,9 +131,19 @@ class Expression(object):
         self._frames = frame + offset
         return self
 
-    def concat(self, last_frame, interp=5):
+    def after(self, expression, interp=5):
+        """ Interplolate this expression so it can be played after
+        the given expression in the argument.
+        Step-by-step of the interpolation:
+        * Calculate interpolation frames from the last frame of given
+        expression to first frame of this expression.
+        * Add the cummulative differences of this expression the
+        the last frame of the interpolated frames.
+        * Woala!
         """
-        """
+        if not isinstance(expression, Expression):
+            raise ValueError("`expression` argument must be instance of Expression.")
+        last_frame = expression[-1]
         # ====== interpolate first ====== #
         interp = interpolate(last_frame, self.frames[0], nFrames=interp)
         # ====== adding offset ====== #

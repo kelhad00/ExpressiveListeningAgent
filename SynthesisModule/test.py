@@ -18,8 +18,8 @@ laugh = Laugh(2, 300)
 happy = Happy(1, 76)
 sad = Sad(1, 96)
 
-happy.set_reference(laugh[0]).concat(laugh[-1])
-sad.set_reference(laugh[0]).concat(happy[-1])
+happy.set_reference(laugh[0]).after(laugh)
+sad.set_reference(laugh[0]).after(happy)
 
 
 # ===========================================================================
